@@ -8,7 +8,6 @@
 # s4: number of Bulls
 # s5: number of cows
 
-
 Start:
 #Make everything zero except for s0 s1, and s7
 add $t0, $zero, $zero
@@ -72,7 +71,7 @@ Cows:
 add $t2, $zero, $zero #make $t2 zero
 add $t6, $zero, $zero #$t6 (i = 0)
 
-add $t7, $zero, 7 #We compare to this to break our loop
+addi $t7, $zero, 3 #We compare to this to break our loop
 
 add $t4, $zero, $s1 #t4, shift result, starts with the user input value
 
@@ -100,7 +99,7 @@ bne $t3, $zero, EndCow #If the digit does not equal, move on
 addi $t2, $t2, 1 #else add 1 to numCows
 
 EndCow:
-move $s5, $t2
+add $s5, $s5, $t2
 addi $t6, $t6, 1 #i++
 bne $t6, $t7, Loop
 
@@ -119,7 +118,7 @@ jr $ra
 
 Win:
 #This currently just ends the program
-li $a0 10
+li $v0, 10
 syscall
 
 
