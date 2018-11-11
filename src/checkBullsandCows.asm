@@ -8,6 +8,7 @@
 # s4: number of Bulls
 # s5: number of cows
 
+
 Start:
 #Make everything zero except for s0 s1, and s7
 add $t0, $zero, $zero
@@ -65,15 +66,15 @@ EndBull:
 move $s4, $t2 #This stores the number of Bulls in $s4
 
 
-
+###FIX ME### - Still buggy, but working slightly better.
 Cows:
 #Checking the number of cows 
 add $t2, $zero, $zero #make $t2 zero
-add $t6, $zero, $zero #$t5 (i = 0)
+add $t6, $zero, $zero #$t6 (i = 0)
 
-add $t7, $zero, 3 #We compare to this to break our loop
+add $t7, $zero, 7 #We compare to this to break our loop
 
-add $t4, $t4, $s1 #t4, shift result, starts with the user input value
+add $t4, $zero, $s1 #t4, shift result, starts with the user input value
 
 Loop:
 jal Shift #call the shift
@@ -90,7 +91,7 @@ addi $t2, $t2, 1 #else add 1 to numCows
 
 Cow3:
 andi $t3, $t0, 0x0000FF00 #get third character of $t0, the result of xor
-bne $t3, $zero, Bull4 #If the digit does not equal, move on
+bne $t3, $zero, Cow4 #If the digit does not equal, move on
 addi $t2, $t2, 1 #else add 1 to numCows
 
 Cow4:
@@ -117,7 +118,9 @@ add $t4, $t4, $t5 #Add the two together
 jr $ra
 
 Win:
-#Will figure out later
+#This currently just ends the program
+li $a0 10
+syscall
 
 
 
