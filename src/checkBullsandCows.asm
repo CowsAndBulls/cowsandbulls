@@ -28,44 +28,25 @@ xor $t0, $s0, $s1 # We want to see if our guess is the same as our code
 beq  $t0, $zero, Win
 
 
-Bulls:
+Bulls: 		#Using the result of xor earlier we will check is we have any bulls in out user guess
+					
+add $t2, $zero, $zero #resets $t2 our item counter
+li	$t1, 0x000000FF  #This is our comparitive, for looping and retrieving characters
 
-#Using the result of xor earlier we will check is we have any bulls in out user guess
+Loop1:
+and $t3, $t0, $t1	#retrieve the character	
+bne $t3, $zero, L1	#compare the character
+addi $t2, $t2, 1    #add if equal
 
-add $t2, $zero, $zero  #$t2, which hold the number of bulls, gets reset
-andi $t3, $t0, 0xFF000000 #get first character of $t0, the result of xor
-
-bne $t3, $zero, Bull2 #If the digit does not equal, move on
-
-addi $t2, $t2, 1 #else add 1 to numBulls
-
-Bull2:
-andi $t3, $t0, 0x00FF0000 #get second character of $t0, the result of xor
-
-bne $t3, $zero, Bull3 #If the digit does not equal, move on
-
-addi $t2, $t2, 1 #else add 1 to numBulls
-
-Bull3:
-andi $t3, $t0, 0x0000FF00 #get third character of $t0, the result of xor
-
-bne $t3, $zero, Bull4 #If the digit does not equal, move on
-
-addi $t2, $t2, 1 #else add 1 to numBulls
-
-Bull4:
-andi $t3, $t0, 0x000000FF #get fourth character of $t0, the result of xor
-
-bne $t3, $zero, EndBull #If the digit does not equal, move on
-
-addi $t2, $t2, 1 #else add 1 to numBulls
+L1:	
+beq $t1, 0xFF000000, L1end	#If we have gone through all of the characters, end the loop
+sll $t1, $t1, 8				#if not we modify to retrieve the next character
+j Loop1						#jump!
+								
+L1end:							
+move $s4, $t2   	#store our result
 
 
-EndBull:
-move $s4, $t2 #This stores the number of Bulls in $s4
-
-
-###FIX ME### - Still buggy, but working slightly better.
 Cows:
 #Checking the number of cows 
 add $t2, $zero, $zero #make $t2 zero
@@ -77,31 +58,24 @@ add $t4, $zero, $s1 #t4, shift result, starts with the user input value
 
 Loop:
 jal Shift #call the shift
-xor $t0, $s0, $t4
-add $t2, $zero, $zero  #$t2, which hold the number of bulls, gets reset
-andi $t3, $t0, 0xFF000000 #get first character of $t0, the result of xor
-bne $t3, $zero, Cow2 #If the digit does not equal, move on
-addi $t2, $t2, 1 #else add 1 to numCows
+xor $t0, $s0, $t4 #xor it for our comparitive
+add $t2, $zero, $zero #reset $t2, our item counter
+li	$t1, 0x000000FF	#reset our register for character retrieval and looping
 
-Cow2:
-andi $t3, $t0, 0x00FF0000 #get second character of $t0, the result of xor
-bne $t3, $zero, Cow3 #If the digit does not equal, move on
-addi $t2, $t2, 1 #else add 1 to numCows
+Loop2:
+and $t3, $t0, $t1				#get the character
+bne $t3, $zero, L2				#compare
+addi $t2, $t2, 1				#add to counter
 
-Cow3:
-andi $t3, $t0, 0x0000FF00 #get third character of $t0, the result of xor
-bne $t3, $zero, Cow4 #If the digit does not equal, move on
-addi $t2, $t2, 1 #else add 1 to numCows
-
-Cow4:
-andi $t3, $t0, 0x000000FF #get fourth character of $t0, the result of xor
-bne $t3, $zero, EndCow #If the digit does not equal, move on
-addi $t2, $t2, 1 #else add 1 to numCows
-
-EndCow:
-add $s5, $s5, $t2
-addi $t6, $t6, 1 #i++
-bne $t6, $t7, Loop
+L2:	
+beq $t1, 0xFF000000, L2end		#Break when we go through entire word
+sll $t1, $t1, 8					#Edit $t1 so that we can get next character
+j Loop2							#jump!
+								
+L2end:							
+add $s5, $s5, $t2				#store our totals
+addi $t6, $t6, 1 				#i++			
+bne $t6, $t7, Loop				#break our larger loop when done
 
 
 #Restore Stuff
