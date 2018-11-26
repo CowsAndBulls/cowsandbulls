@@ -13,7 +13,7 @@ err_length:	.asciiz	"The string must be four letters long"
 get_usrword:
 	li $v0, 8	#Read up to 16 bytes from the user into buf
 	la $a0, buf
-	li $a1, 16
+	li $a1, 15
 	syscall
 	li $t0, 0	#Initialize return value temporaries
 	li $t1, 0
@@ -22,3 +22,6 @@ get_usrword:
 end:	move $v0, $t0	#Set return values and return
 	move $v1, $t1
 	jr $ra
+
+#To add new validation:
+#If incorrect, set $v0 to address of the error message and jump to end
