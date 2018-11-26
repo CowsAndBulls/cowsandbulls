@@ -12,8 +12,8 @@ timer_start:
 	sw $a0, timer
 	jr $ra
 
-#Returns the number of seconds since the timer was started
-#Return values: $v0 = Seconds since timer was started
+#Returns the number of milliseconds since the timer was started
+#Return values: $v0 = Milliseconds since timer was started
 .globl timer_elapsed
 timer_elapsed:
 	li $v0, 30
@@ -38,8 +38,9 @@ srand:
 #Return values: $v0 = Random integer in the range [$a0, $a0+$a1]
 .globl rand
 rand:
-	move $t0, $a0 #Preserve $a0
-	li $a0, 42    #Call to generate a random number
+	move $t0, $a0 	#Preserve $a0
+	li $v0, 42	#Call to generate a random number
+	li $a0, 0
 	syscall
 	add $v0, $a0, $t0
 	jr $ra
