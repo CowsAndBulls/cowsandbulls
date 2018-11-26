@@ -3,7 +3,6 @@
 .data
 intro_msg:	.asciiz	"Welcome to the Cows and Bulls game\n"
 gprompt:	.asciiz "Enter your guess: "
-guess_msg:	.asciiz "Your guess: "
 cows_msg:	.asciiz "Cows: "
 bulls_msg:	.asciiz ", Bulls: "
 correct_msg:	.asciiz "You guessed the word!\n"
@@ -11,6 +10,8 @@ time_msg:	.asciiz "Elapsed time: "
 sec_msg:	.asciiz " seconds\n"
 repeat_msg:	.asciiz "Do you want to play again? (y/n): "
 end_msg:	.asciiz "Thanks for playing!\n"
+.align 2
+test: .asciiz "TEST"
 
 .text
 #Main function
@@ -22,21 +23,36 @@ main:	jal srand		#Seed the random number generator
 mloop:	li $a0, 0		#Generate a number 0-99 for selecting a word
 	li $a1, 100		
 	jal rand
-	nop			#TODO: load selected word as integer into $s1
+	nop			#TODO: load selected word as integer into $s0
 	jal timer_start		#Restart timer
 gloop:	li $v0, 4		#Print the guess prompt
 	la $a0, gprompt
 	syscall
-	jal get_usrword		#Get the user's input
+	jal get_usrword		#Get the user's input ($v0 = error, $v1 = input)
 	beq $v0, 0, valid	#Check if the input was valid
 	move $a0, $v0		#If not, print the error and loop
 	li $v0, 4
 	syscall
 	j gloop
-valid:	nop			#TODO: count cows and bulls ($v0 = cows $v1 = bulls?)
-	li $v1, 4
+valid:	move $a0, $s0		#Count cows and bulls ($v0 = cows $v1 = bulls)
+	move $a1, $v1
+	jal count_cbulls	
 	beq $v1, 4, glend	#If the bull count is 4, the user has guessed correctly, so end the loop
-	nop			#TODO: print # of cows/bulls
+	li $v0, 4#		Otherwise, print the number of cows
+	la $a0, cows_msg
+	syscall
+	li $v0, 1
+	move $a0, $v0		
+	syscall
+	li $v0, 4		#Print the number of bulls
+	la $a0, bulls_msg
+	syscall
+	li $v0, 1
+	move $a0, $v1
+	syscall
+	li $v0, 11		#Print a newline
+	li $a0, '\n'
+	syscall
 	j gloop			#Loop again until the user guesses correctly
 glend:	jal timer_elapsed	#Get elapsed time (in milliseconds)
 	div $s2, $v0, 1000	#Divide elapsed ms by 1000 and store it in $s2
