@@ -1,15 +1,16 @@
 #------------ This will check for number of bulls and cows -------------#
 .text
 
-# s0: secret code
-# s1: userInput
+# a0: secret code
+# a1: userInput
 #
 # RETURN::
-# s4: number of Bulls
-# s5: number of cows
+# r0: number of cows
+# r1: number of Bulls
 
-Start:
-#Make everything zero except for s0 s1, and s7
+.globl count_cbulls
+count_cbulls:
+#Make everything zero except for a0 a1, and s7
 add $t0, $zero, $zero
 add $t1, $zero, $zero
 add $t2, $zero, $zero
@@ -23,10 +24,8 @@ add $t7, $zero, $zero
 addi $sp, $sp, -4
 sw $ra, 0($sp)
 
-
-xor $t0, $s0, $s1 # We want to see if our guess is the same as our code
-beq  $t0, $zero, Win
-
+#xor $t0, $a0, $a1 # We want to see if our guess is the same as our code
+#beq  $t0, $zero, Win
 
 Bulls: 		#Using the result of xor earlier we will check is we have any bulls in out user guess
 					
@@ -54,11 +53,11 @@ add $t6, $zero, $zero #$t6 (i = 0)
 
 addi $t7, $zero, 3 #We compare to this to break our loop
 
-add $t4, $zero, $s1 #t4, shift result, starts with the user input value
+add $t4, $zero, $a1 #t4, shift result, starts with the user input value
 
 Loop:
 jal Shift #call the shift
-xor $t0, $s0, $t4 #xor it for our comparitive
+xor $t0, $a0, $t4 #xor it for our comparitive
 add $t2, $zero, $zero #reset $t2, our item counter
 li	$t1, 0x000000FF	#reset our register for character retrieval and looping
 
@@ -81,6 +80,8 @@ bne $t6, $t7, Loop				#break our larger loop when done
 #Restore Stuff
 lw $ra, ($sp)
 addi $sp, $sp, 4
+move $v0, $s5	#Set return values
+move $v1, $s4
 jr $ra
 
 Shift:
@@ -89,14 +90,3 @@ sll $t4, $t4, 8 #Shift over by one letter
 srl $t5, $t5, 24 #Shift the first character to the end
 add $t4, $t4, $t5 #Add the two together
 jr $ra
-
-Win:
-#This currently just ends the program
-li $v0, 10
-syscall
-
-
-
-
-
-
