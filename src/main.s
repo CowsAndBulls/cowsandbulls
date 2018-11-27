@@ -10,8 +10,6 @@ time_msg:	.asciiz "Elapsed time: "
 sec_msg:	.asciiz " seconds\n"
 repeat_msg:	.asciiz "Do you want to play again? (y/n): "
 end_msg:	.asciiz "Thanks for playing!\n"
-.align 2
-test: .asciiz "TEST"
 
 .text
 #Main function
@@ -38,11 +36,12 @@ valid:	move $a0, $s0		#Count cows and bulls ($v0 = cows $v1 = bulls)
 	move $a1, $v1
 	jal count_cbulls	
 	beq $v1, 4, glend	#If the bull count is 4, the user has guessed correctly, so end the loop
-	li $v0, 4#		Otherwise, print the number of cows
+	move $t1, $v0		#Store the number of cows
+	li $v0, 4		#Otherwise, print the number of cows
 	la $a0, cows_msg
 	syscall
 	li $v0, 1
-	move $a0, $v0		
+	move $a0, $t1		
 	syscall
 	li $v0, 4		#Print the number of bulls
 	la $a0, bulls_msg
