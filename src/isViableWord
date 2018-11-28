@@ -8,7 +8,8 @@
 # (Also assume that the string passed only has lowercase letters and has a length of four)
 
 .data
-Test: .asciiz "when"
+#  For testing purposes
+#Test: .asciiz "when"
 .align 2
 # Contains all the valid words
 viableWords: .ascii "able", "atom", "arms", "aunt", "bank", "blue", "bowl", "burn", 
@@ -24,29 +25,31 @@ viableWords: .ascii "able", "atom", "arms", "aunt", "bank", "blue", "bowl", "bur
 testArray: .asciiz "10", "20", "30", "40", "50"
 
 .text
-lw $a0, Test
+# For testing purposes
+#lw $a0, Test
 
-la $s1, viableWords
+la $t2, viableWords
 
 move $v0, $zero
 # The length of the viable words array minus 1 times 4
-addi $s0, $s0, 99
+addi $t4, $t4, 99
 # Set the count variable to zero
 move $t1, $zero
 viableLoop:
-lw $t0, 0($s1)
-beq $t1, $s0, viableEnd
+lw $t0, 0($t2)
+beq $t1, $t3, viableEnd
 beq $t0, $a0, viableLoopEnd
 addi $t1, $t1, 1
-addi $s1, $s1, 4
+addi $t2, $t2, 4
 j viableLoop
 
 viableLoopEnd:
 addi $v0, $v0, 1
 
 viableEnd:
-move $t3, $v0
-li $v0, 1
-move $a0, $t3
-syscall
+# For testing purposes
+#move $t3, $v0
+#li $v0, 1
+#move $a0, $t3
+#syscall
 
