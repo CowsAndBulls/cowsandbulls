@@ -5,13 +5,15 @@
 #
 # RETURN:     
 # $v0 holds a one or zero, where 1 means that the string has no duplicates while 0 means it is has duplicate characters character.
-# (Also assume that string passed only has lowercase letters)
+# (Also assume that the string passed only has lowercase letters)
 
 .data
-Test: .asciiz "asdfghjkl"
+# For testing purposes
+#Test: .asciiz "asdfghjkl"
 
 .text
-la $a0, Test
+# For testing purposes
+#la $a0, Test
 
 move $v0, $zero
 
@@ -42,7 +44,7 @@ addi $v0, $v0, 1
 
 dupEnd:
 # For testing purposes
-move $t3, $v0
-li $v0, 1
-move $a0, $t3
-syscall
+#move $t3, $v0
+#li $v0, 1
+#move $a0, $t3
+#syscall

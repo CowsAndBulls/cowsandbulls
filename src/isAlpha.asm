@@ -7,10 +7,13 @@
 # $v0 holds a one or zero, where 1 means that the string has all alphabetical characters while 0 means it is has at least one non-alphabetical character.
 
 .data
-Test: .asciiz "azAZ"
+# For testing purposes
+#Test: .asciiz "azAZ"
 
 .text
-la $a0, Test
+# For testing purposes
+#la $a0, Test
+
 move $v0, $zero
 
 isAlpha:
@@ -41,10 +44,12 @@ addi $a0, $a0, 1
 j isAlpha
 
 alphaLoopEnd:
+# If it has reached the end of the string there must only be alpha characters in the string
 addi $v0, $v0, 1
 
 alphaEnd:
-move $t3, $v0
-li $v0, 1
-move $a0, $t3
-syscall
+# For testing purposes
+#move $t3, $v0
+#li $v0, 1
+#move $a0, $t3
+#syscall
