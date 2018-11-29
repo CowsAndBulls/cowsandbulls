@@ -7,6 +7,8 @@
 # $v0 holds a one or zero, where 1 means that the string is in the viable list while 0 means it is not in the list
 # (Also assume that the string passed only has lowercase letters and has a length of four)
 
+
+
 .data
 #  For testing purposes
 #Test: .asciiz "when"
@@ -27,6 +29,9 @@ testArray: .asciiz "10", "20", "30", "40", "50"
 .text
 # For testing purposes
 #lw $a0, Test
+
+.globl isViableWord
+isViableWord:
 
 la $t2, viableWords
 
@@ -52,4 +57,5 @@ viableEnd:
 #li $v0, 1
 #move $a0, $t3
 #syscall
+jr $ra
 

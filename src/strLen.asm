@@ -14,7 +14,10 @@
 # For testing purposes
 #la $a0, Test
 
+.globl strLen
 strLen:
+
+strLenLoop:
 
 # Loads the i byte of the word (Throws exception if there is no word given)
 lb $t0, 0($a0)
@@ -23,7 +26,7 @@ beq $t0, $zero, lenLoopEnd
 # Otherwise, increase count and i by one
 addi $a0, $a0, 1
 addi $t1, $t1, 1
-j strLen
+j strLenLoop
 
 lenLoopEnd:
 # For testing purposes
@@ -47,3 +50,4 @@ lenEnd:
 #li $v0, 1
 #move $a0, $t3
 #syscall
+$ra

@@ -4,6 +4,9 @@
 .align 2	#Align the buffer to 4 bytes
 buf:		.space 16	#Buffer for user input
 err_length:	.asciiz	"The string must be four letters long"
+err_alpha:	.asciiz "The string must contain only alphabetical letters"
+err_viable:	.asciiz "The string must be a valid english word"
+err_dup:	.asciiz "The string must contain no duplicate letters"
 
 .text
 #Reads a 4-character word from the user and validates it

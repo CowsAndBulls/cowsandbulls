@@ -15,6 +15,9 @@
 # For testing purposes
 #la $a0, Test
 
+.globl checkDuplicates
+checkDuplicates:
+
 move $v0, $zero
 
 checkDupLoop:
@@ -48,3 +51,4 @@ dupEnd:
 #li $v0, 1
 #move $a0, $t3
 #syscall
+jr $ra

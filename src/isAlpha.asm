@@ -13,10 +13,12 @@
 .text
 # For testing purposes
 #la $a0, Test
+.globl isAlpha
+isAlpha:
 
 move $v0, $zero
 
-isAlpha:
+isAlphaLoop:
 lb $t0, 0($a0)
 # If the null terminator is reached then exit the loop
 beqz $t0, alphaLoopEnd 
@@ -41,7 +43,7 @@ and $t5, $t3, $t4
 # If $t5 is 1 then is has detected a non-alpha character, so break out of the loop
 beq $t5, 1, alphaEnd
 addi $a0, $a0, 1
-j isAlpha
+j isAlphaLoop
 
 alphaLoopEnd:
 # If it has reached the end of the string there must only be alpha characters in the string
@@ -53,3 +55,4 @@ alphaEnd:
 #li $v0, 1
 #move $a0, $t3
 #syscall
+jr $ra

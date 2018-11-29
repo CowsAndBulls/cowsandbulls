@@ -15,6 +15,9 @@
 # For testing purposes
 #la $a0, Test
 
+.globl toLowercase
+toLowercase: 
+
 lowercaseLoop:
 lb $t0, 0($a0)
 beqz $t0, lowerLoopEnd 
@@ -37,3 +40,4 @@ lowerLoopEnd:
 #li $v0, 4
 #syscall
 move $v0, $a0
+jr $ra
