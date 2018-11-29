@@ -9,11 +9,11 @@
 
 .data
 # For testing purposes
-Test: .asciiz "a"
+#Test: .asciiz "ASDFGHJKLZXCVBNM"
 
 .text
 # For testing purposes
-la $a0, Test
+#la $a0, Test
 
 lowercaseLoop:
 lb $t0, 0($a0)
@@ -32,8 +32,8 @@ j lowercaseLoop
 
 lowerLoopEnd:
 # For testing purposes
-move $t1, $a0
-la $a0, Test
-li $v0, 4
-syscall
-#move $v0, $a0
+#move $t1, $a0
+#la $a0, Test
+#li $v0, 4
+#syscall
+move $v0, $a0
