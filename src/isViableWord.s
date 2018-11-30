@@ -23,7 +23,7 @@ viableWords: .ascii "able", "atom", "arms", "aunt", "bank", "blue", "bowl", "bur
 "stir", "tail", "tiny", "toad", "true", "ugly", "unit", "unto", "user", "vase", "vent", 
 "vine", "vote", "wage", "weak", "wild", "wrap", "yard", "year", "yeah", "yoga", "zero", 
 "zest", "zone", "zits"
-testArray: .asciiz "10", "20", "30", "40", "50"
+#testArray: .asciiz "10", "20", "30", "40", "50"
 
 .text
 # For testing purposes

@@ -2,7 +2,7 @@
 
 .data
 intro_msg:	.asciiz	"Welcome to the Cows and Bulls game\n"
-gprompt:	.asciiz "Enter your guess: "
+gprompt:	.asciiz "If you would like to give up enter \"yes\", otherwise enter your guess: "
 cows_msg:	.asciiz "Cows: "
 bulls_msg:	.asciiz ", Bulls: "
 correct_msg:	.asciiz "You guessed the word!\n"
@@ -30,6 +30,7 @@ gloop:	li $v0, 4		#Print the guess prompt
 	la $a0, gprompt
 	syscall
 	jal get_usrword		#Get the user's input ($v0 = error, $v1 = input)
+	beq $v0, 1, glend	#Check if the user gave up
 	beq $v0, 0, valid	#Check if the input was valid
 	move $a0, $v0		#If not, print the error and loop
 	li $v0, 4
