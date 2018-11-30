@@ -10,21 +10,12 @@
 
 .globl count_cbulls
 count_cbulls:
-#Make everything zero except for a0 a1, and s7
-add $t0, $zero, $zero
-add $t1, $zero, $zero
-add $t2, $zero, $zero
-add $t3, $zero, $zero
-add $t4, $zero, $zero
-add $t5, $zero, $zero
-add $t6, $zero, $zero
-add $t7, $zero, $zero
-add $s4, $zero, $zero
-add $s5, $zero, $zero
 
 #Store the return address
 addi $sp, $sp, -4
 sw $ra, 0($sp)
+
+jal Reset
 
 xor $t0, $a0, $a1 # We want to see if our guess is the same as our code
 
@@ -79,6 +70,7 @@ bne $t6, $t7, Loop				#break our larger loop when done
 
 
 #Restore Stuff
+jal Reset
 lw $ra, ($sp)
 addi $sp, $sp, 4
 move $v0, $s5	#Set return values
@@ -91,3 +83,17 @@ sll $t4, $t4, 8 #Shift over by one letter
 srl $t5, $t5, 24 #Shift the first character to the end
 add $t4, $t4, $t5 #Add the two together
 jr $ra
+
+Reset:
+#Make everything zero except for a0 a1, and s7
+add $t0, $zero, $zero
+add $t1, $zero, $zero
+add $t2, $zero, $zero
+add $t3, $zero, $zero
+add $t4, $zero, $zero
+add $t5, $zero, $zero
+add $t6, $zero, $zero
+add $t7, $zero, $zero
+add $s4, $zero, $zero
+add $s5, $zero, $zero
+jr 	$ra
