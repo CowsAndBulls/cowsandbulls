@@ -3,10 +3,10 @@
 .data
 .align 2	#Align the buffer to 4 bytes
 buf:		.space 16	#Buffer for user input
-err_length:	.asciiz	"The string must be four letters long"
-err_alpha:	.asciiz "The string must contain only alphabetical letters"
-err_viable:	.asciiz "The string must be a valid english word"
-err_dup:	.asciiz "The string must contain no duplicate letters"
+err_length:	.asciiz	"The string must be four letters long\n"
+err_alpha:	.asciiz "The string must contain only alphabetical letters\n"
+err_viable:	.asciiz "The string must be a valid english word\n"
+err_dup:	.asciiz "The string must contain no duplicate letters\n"
 
 .text
 #Reads a 4-character word from the user and validates it
@@ -32,19 +32,17 @@ alphaTrue:
 	la $a0, buf
 	jal toLowercase
 	
-	move $a0, $v0
+	#move $a0, $v0
 	jal strLen
 	bnez $v0, lengthTrue
 	la $t0, err_length
 	j end
 lengthTrue:
-	move $a0, $v0
 	jal checkDuplicates
 	bnez $v0, dupTrue
 	la $t0, err_dup
 	j end	
 dupTrue:
-	move $a0, $v0
 	jal isViableWord	
 	bnez $v0, end
 	la $t0, err_viable

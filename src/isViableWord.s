@@ -39,10 +39,22 @@ move $v0, $zero
 addi $t4, $t4, 99
 # Set the count variable to zero
 move $t1, $zero
+
+#sb $t3, 0($a0)
+#sb $t3, 1($a0)
+#sb $t3, 2($a0)
+#sb $t3, 3($a0)
+lw $t3, -4($a0)  
+
 viableLoop:
 lw $t0, 0($t2)
-beq $t1, $t3, viableEnd
-beq $t0, $a0, viableLoopEnd
+
+
+
+# If we have reached maxed size of array, end
+beq $t1, $t4, viableEnd
+# If we have found a match in the array, exit loop
+beq $t0, $t3, viableLoopEnd
 addi $t1, $t1, 1
 addi $t2, $t2, 4
 j viableLoop
@@ -56,5 +68,6 @@ viableEnd:
 #li $v0, 1
 #move $a0, $t3
 #syscall
+move $t0, $zero
 jr $ra
 

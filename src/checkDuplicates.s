@@ -9,7 +9,7 @@
 
 .data
 # For testing purposes
-#Test: .asciiz "asdfghjkl"
+Test: .asciiz "asdfghjkl"
 
 .text
 # For testing purposes
@@ -23,6 +23,7 @@ move $v0, $zero
 checkDupLoop:
 lb $t0, 0($a0)
 # If the loop reaches a null terminator, end the loop
+beq $t0, 0xa, dupLoopEnd
 beqz $t0, dupLoopEnd 
 # Make a copy of the arguement and add 1 to it to be the staring value for the second loop
 move $t1, $a0
