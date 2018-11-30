@@ -17,6 +17,9 @@ sw $ra, 0($sp)
 
 jal Reset
 
+add $s4, $zero, $zero
+add $s5, $zero, $zero
+
 xor $t0, $a0, $a1 # We want to see if our guess is the same as our code
 
 Bulls: 		#Using the result of xor earlier we will check is we have any bulls in out user guess
@@ -94,6 +97,4 @@ add $t4, $zero, $zero
 add $t5, $zero, $zero
 add $t6, $zero, $zero
 add $t7, $zero, $zero
-add $s4, $zero, $zero
-add $s5, $zero, $zero
 jr 	$ra
