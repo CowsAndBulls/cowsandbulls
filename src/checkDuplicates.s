@@ -9,7 +9,7 @@
 
 .data
 # For testing purposes
-Test: .asciiz "asdfghjkl"
+#Test: .asciiz "asdfghjkla"
 
 .text
 # For testing purposes
@@ -21,7 +21,7 @@ checkDuplicates:
 move $v0, $zero
 
 checkDupLoop:
-lb $t0, 0($a0)
+lb $t0, -4($a0)
 # If the loop reaches a null terminator, end the loop
 beq $t0, 0xa, dupLoopEnd
 beqz $t0, dupLoopEnd 
@@ -29,7 +29,7 @@ beqz $t0, dupLoopEnd
 move $t1, $a0
 addi $t1, $t1, 1
 checkDupLoop2:
-lb $t2, 0($t1)
+lb $t2, -4($t1)
 beqz $t2, dupLoopEnd2
 
 # If the loop finds a character that is the same as the current character for the fisrt loop then break out of outer loop

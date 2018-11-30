@@ -44,7 +44,7 @@ move $t1, $zero
 #sb $t3, 1($a0)
 #sb $t3, 2($a0)
 #sb $t3, 3($a0)
-lw $t3, -4($a0)  
+lw $t3, -8($a0)  
 
 viableLoop:
 lw $t0, 0($t2)
