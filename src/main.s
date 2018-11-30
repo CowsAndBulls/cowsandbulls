@@ -22,8 +22,9 @@ mloop:	li $a0, 0		#Generate a number 0-99 for selecting a word
 	li $a1, 100		
 	jal rand
 	la $t0, viableWords	#Get address of randomly selected word
+	mul $v0, $v0, 4
 	add $t0, $t0, $v0
-
+	lw $s0, ($t0)		#Load the selected word into $:0
 	jal timer_start		#Restart timer
 gloop:	li $v0, 4		#Print the guess prompt
 	la $a0, gprompt

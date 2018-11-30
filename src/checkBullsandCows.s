@@ -78,6 +78,8 @@ lw $ra, ($sp)
 addi $sp, $sp, 4
 move $v0, $s5	#Set return values
 move $v1, $s4
+add $s4, $zero, $zero
+add $s5, $zero, $zero
 jr $ra
 
 Shift:
