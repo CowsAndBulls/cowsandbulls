@@ -21,7 +21,9 @@ main:	jal srand		#Seed the random number generator
 mloop:	li $a0, 0		#Generate a number 0-99 for selecting a word
 	li $a1, 100		
 	jal rand
-	nop			#TODO: load selected word as integer into $s0
+	la $t0, viableWords	#Get address of randomly selected word
+	add $t0, $t0, $v0
+
 	jal timer_start		#Restart timer
 gloop:	li $v0, 4		#Print the guess prompt
 	la $a0, gprompt
