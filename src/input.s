@@ -14,6 +14,8 @@ err_dup:	.asciiz "The string must contain no duplicate letters"
 #		$v1 = user string as integer if valid or 0 if invalid
 .globl get_usrword
 get_usrword:
+	move $s0, $ra
+	
 	li $v0, 8	#Read up to 16 bytes from the user into buf
 	la $a0, buf
 	li $a1, 15
@@ -51,6 +53,7 @@ dupTrue:
 	lw $t1, buf	#Load 4 bytes of the string as an integer to $s1
 end:	move $v0, $t0	#Set return values and return
 	move $v1, $t1
+	move $ra, $s0
 	jr $ra
 
 #To add new validation:
