@@ -21,33 +21,6 @@ get_usrword:
 	li $t0, 0	#Initialize return value temporaries
 	li $t1, 0
 	nop		#TODO: Validate length & contents
-	la $a0, buf
-	jal isAlpha
-	bnez $v0, alphaTrue
-	la $t0, err_alpha
-	j end
-alphaTrue:
-	la $a0, buf
-	jal toLowercase
-	
-	move $a0, $v0
-	jal strLen
-	bnez $v0, lengthTrue
-	la $t0, err_length
-	j end
-lengthTrue:
-	move $a0, $v0
-	jal checkDuplicates
-	bnez $v0, dupTrue
-	la $t0, err_dup
-	j end	
-dupTrue:
-	move $a0, $v0
-	jal isViableWord	
-	bnez $v0, end
-	la $t0, err_viable
-	j end
-	
 	lw $t1, buf	#Load 4 bytes of the string as an integer to $s1
 end:	move $v0, $t0	#Set return values and return
 	move $v1, $t1
