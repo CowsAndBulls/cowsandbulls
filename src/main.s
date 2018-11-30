@@ -23,6 +23,7 @@ mloop:	li $a0, 0		#Generate a number 0-99 for selecting a word
 	jal rand
 	la $t0, viableWords	#Get address of randomly selected word
 	add $t0, $t0, $v0
+	lw $s2, ($t0)
 
 	jal timer_start		#Restart timer
 gloop:	li $v0, 4		#Print the guess prompt
@@ -34,8 +35,8 @@ gloop:	li $v0, 4		#Print the guess prompt
 	li $v0, 4
 	syscall
 	j gloop
-valid:	move $a0, $s0		#Count cows and bulls ($v0 = cows $v1 = bulls)
-	move $a1, $v1
+valid:	move $a0, $s2		#Count cows and bulls ($v0 = cows $v1 = bulls)
+	move $a1, $s1
 	jal count_cbulls	
 	beq $v1, 4, glend	#If the bull count is 4, the user has guessed correctly, so end the loop
 	move $t1, $v0		#Store the number of cows

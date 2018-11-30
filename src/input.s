@@ -22,6 +22,7 @@ get_usrword:
 	syscall
 	li $t0, 0	#Initialize return value temporaries
 	li $t1, 0
+	lw $s1, buf
 	nop		#TODO: Validate length & contents
 	la $a0, buf
 	jal isAlpha
