@@ -10,10 +10,9 @@
 
 
 .data
-#  For testing purposes
-#Test: .asciiz "when"
 .align 2
 # Contains all the valid words
+.globl viableWords
 viableWords: .ascii "able", "atom", "arms", "aunt", "bank", "blue", "bowl", "burn", 
 "cake", "cars", "code", "corn", "dash", "desk", "dogs", "duck", "echo", "ends", "evil", 
 "exit",  "face", "file", "fort", "fund",  "game", "girl", "goat", "guys", "hack", "hero", 
