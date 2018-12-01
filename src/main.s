@@ -10,6 +10,9 @@ time_msg:	.asciiz "Elapsed time: "
 sec_msg:	.asciiz " seconds\n"
 repeat_msg:	.asciiz "Do you want to play again? (y/n): "
 end_msg:	.asciiz "Thanks for playing!\n"
+fail_msg:	.asciiz "The correct word is "
+word_print: .asciiz "test"
+
 
 .text
 #Main function
@@ -17,26 +20,30 @@ end_msg:	.asciiz "Thanks for playing!\n"
 main:	jal srand		#Seed the random number generator
 	li $v0, 4		#Print the introduction
 	la $a0, intro_msg
+	la $a2, fail_msg
 	syscall
 mloop:	li $a0, 0		#Generate a number 0-99 for selecting a word
 	li $a1, 100		
 	jal rand
+	sll $v0, $v0, 2
 	la $t0, viableWords	#Get address of randomly selected word
 	add $t0, $t0, $v0
-	lw $s2, ($t0)
+	lw $s2, ($t0)		#Gets the hidden string address and loads it into $s2
+	la $s3, ($t0)
 
 	jal timer_start		#Restart timer
 gloop:	li $v0, 4		#Print the guess prompt
 	la $a0, gprompt
 	syscall
 	jal get_usrword		#Get the user's input ($v0 = error, $v1 = input)
-	beq $v0, 1, glend	#Check if the user gave up
+	beq $v0, 1, playerFail	#Check if the user gave up
 	beq $v0, 0, valid	#Check if the input was valid
 	move $a0, $v0		#If not, print the error and loop
 	li $v0, 4
 	syscall
 	j gloop
-valid:	move $a0, $s2		#Count cows and bulls ($v0 = cows $v1 = bulls)
+valid:
+	move $a0, $s2		#Count cows and bulls ($v0 = cows $v1 = bulls)
 	move $a1, $s1
 	jal count_cbulls	
 	beq $v1, 4, glend	#If the bull count is 4, the user has guessed correctly, so end the loop
@@ -84,3 +91,29 @@ mlend:	li $v0, 4		#Print the end message
 	syscall
 	li $v0, 10		#End of program
 	syscall
+playerFail:
+	li $v0, 4
+	la $a0, fail_msg
+	syscall
+	li $v0, 4
+	move $t1, $s3
+	la $a0, word_print
+	lb $t0, ($t1)
+	sb $t0, ($a0)
+	lb $t0, 1($t1)
+	sb $t0, 1($a0)
+	lb $t0, 2($t1)
+	sb $t0, 2($a0)
+	lb $t0, 3($t1)
+	sb $t0, 3($a0)
+	move $t0, $zero
+	sb $t0, 4($a0)
+	#sb $t0, 4($zero)
+	#la $a0, ($t0)
+	syscall
+	li $v0 11
+	li $a0, 0xa
+	syscall
+	li $t0 0
+	j glend	
+	

@@ -2,6 +2,7 @@
 
 .data
 .align 2	#Align the buffer to 4 bytes
+.globl buf
 buf:		.space 16	#Buffer for user input
 err_length:	.asciiz	"The string must be four letters long\n"
 err_alpha:	.asciiz "The string must contain only alphabetical letters\n"
