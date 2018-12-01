@@ -23,7 +23,7 @@ main:	jal srand		#Seed the random number generator
 	la $a2, fail_msg
 	syscall
 mloop:	li $a0, 0		#Generate a number 0-99 for selecting a word
-	li $a1, 100		
+	li $a1, 825		
 	jal rand
 	sll $v0, $v0, 2
 	la $t0, viableWords	#Get address of randomly selected word
@@ -69,6 +69,7 @@ glend:	jal timer_elapsed	#Get elapsed time (in milliseconds)
 	li $v0, 4		#Print the completion message
 	la $a0, correct_msg
 	syscall
+failEnd:	
 	la $a0, time_msg	#Print time message
 	syscall
 	li $v0, 1		#Print the elapsed time
@@ -114,6 +115,9 @@ playerFail:
 	li $v0 11
 	li $a0, 0xa
 	syscall
-	li $t0 0
-	j glend	
+	
+	jal timer_elapsed	#Get elapsed time (in milliseconds)
+	div $s2, $v0, 1000	#Divide elapsed ms by 1000 and store it in $s2
+	li $v0, 4
+	j failEnd	
 	
