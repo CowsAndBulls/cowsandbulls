@@ -23,7 +23,7 @@ main:	jal srand		#Seed the random number generator
 	la $a2, fail_msg
 	syscall
 mloop:	li $a0, 0		#Generate a number 0-99 for selecting a word
-	li $a1, 825		
+	li $a1, 2374		
 	jal rand
 	sll $v0, $v0, 2
 	la $t0, viableWords	#Get address of randomly selected word
