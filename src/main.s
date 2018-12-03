@@ -21,16 +21,15 @@ main:	jal srand		#Seed the random number generator
 	la $a0, intro_msg
 	la $a2, fail_msg
 	syscall
-mloop:	li $a0, 0		#Generate a number 0-99 for selecting a word
+mloop:	li $a0, 0		#Generate a number 0-2374 for selecting a word
 	li $a1, 2374		
 	jal rand
-	sll $v0, $v0, 2
 	la $t0, viableWords	#Get address of randomly selected word
 	mul $v0, $v0, 4
 	add $t0, $t0, $v0
 	li $s7, 0		#Reset guess count
-	lw $s2, ($t0)		#Gets the hidden string address and loads it into $s2
-	la $s3, ($t0)
+	lw $s2, ($t0)		#Gets the hidden string and loads it into $s2
+	la $s3, ($t0)		#Gets the hidden string address and loads it into $s3
 	jal timer_start		#Restart timer
 gloop:	li $v0, 4		#Print the guess prompt
 	la $a0, gprompt
@@ -63,7 +62,7 @@ valid:	add $s7, $s7, 1		#Increment guess count
 	li $v0, 11		#Print a newline
 	li $a0, '\n'
 	syscall
-	beq $s7, 10, failEnd	#If the user has guessed 10 times, then end
+	beq $s7, 10, playerFail	#If the user has guessed 10 times, then end
 	j gloop			#Loop again until the user guesses correctly
 glend:	jal timer_elapsed	#Get elapsed time (in milliseconds)
 	div $s2, $v0, 1000	#Divide elapsed ms by 1000 and store it in $s2
