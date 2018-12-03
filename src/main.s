@@ -24,7 +24,6 @@ main:	jal srand		#Seed the random number generator
 mloop:	li $a0, 0		#Generate a number 0-2374 for selecting a word
 	li $a1, 2374		
 	jal rand
-	#sll $v0, $v0, 2
 	la $t0, viableWords	#Get address of randomly selected word
 	mul $v0, $v0, 4
 	add $t0, $t0, $v0
