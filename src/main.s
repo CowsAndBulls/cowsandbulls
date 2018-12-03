@@ -62,7 +62,7 @@ valid:	add $s7, $s7, 1		#Increment guess count
 	li $v0, 11		#Print a newline
 	li $a0, '\n'
 	syscall
-	beq $s7, 10, failEnd	#If the user has guessed 10 times, then end
+	beq $s7, 10, playerFail	#If the user has guessed 10 times, then end
 	j gloop			#Loop again until the user guesses correctly
 glend:	jal timer_elapsed	#Get elapsed time (in milliseconds)
 	div $s2, $v0, 1000	#Divide elapsed ms by 1000 and store it in $s2
