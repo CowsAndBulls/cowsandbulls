@@ -16,11 +16,12 @@
 
 .globl strLen
 strLen:
-
+li $t1, 0
 strLenLoop:
 
 # Loads the i byte of the word (Throws exception if there is no word given)
-lb $t0, 0($a0)
+lb $t0, ($a0)
+beq $t0, 0xa, lenLoopEnd
 # If we have reached the null terminator then the loop ends
 beq $t0, $zero, lenLoopEnd
 # Otherwise, increase count and i by one
@@ -50,4 +51,5 @@ lenEnd:
 #li $v0, 1
 #move $a0, $t3
 #syscall
+#move $v0, $t3
 jr $ra

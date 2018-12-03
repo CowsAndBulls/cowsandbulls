@@ -10,6 +10,7 @@
 .data
 # For testing purposes
 #Test: .asciiz "ASDFGHJKLZXCVBNM"
+temp: .asciiz ""
 
 .text
 # For testing purposes
@@ -17,9 +18,10 @@
 
 .globl toLowercase
 toLowercase: 
-
+li $t2, 0
 lowercaseLoop:
 lb $t0, 0($a0)
+beq $t0, 0xa, lowerLoopEnd
 beqz $t0, lowerLoopEnd 
 # Subtract the hex value of 'a' from the current byte
 subi $t1, $t0, 0x61
@@ -31,6 +33,7 @@ addi $t0, $t0, 32
 sb $t0, ($a0)
 continueLowercaseLoop:
 addi $a0, $a0, 1
+addi $t2, $t2, 1
 j lowercaseLoop
 
 lowerLoopEnd:
@@ -39,5 +42,6 @@ lowerLoopEnd:
 #la $a0, Test
 #li $v0, 4
 #syscall
+sub $a0, $a0, $t2
 move $v0, $a0
 jr $ra

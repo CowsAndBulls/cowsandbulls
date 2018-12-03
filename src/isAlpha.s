@@ -20,6 +20,7 @@ move $v0, $zero
 
 isAlphaLoop:
 lb $t0, 0($a0)
+beq $t0, 0xa, alphaLoopEnd
 # If the null terminator is reached then exit the loop
 beqz $t0, alphaLoopEnd 
 # TO DO: Implement this logic into assembly
