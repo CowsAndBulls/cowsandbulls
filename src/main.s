@@ -24,7 +24,6 @@ main:	jal srand		#Seed the random number generator
 mloop:	li $a0, 0		#Generate a number 0-99 for selecting a word
 	li $a1, 2374		
 	jal rand
-	sll $v0, $v0, 2
 	la $t0, viableWords	#Get address of randomly selected word
 	mul $v0, $v0, 4
 	add $t0, $t0, $v0
@@ -63,7 +62,7 @@ valid:	add $s7, $s7, 1		#Increment guess count
 	li $v0, 11		#Print a newline
 	li $a0, '\n'
 	syscall
-	beq $s7, 10, failEnd	#If the user has guessed 10 times, then end
+	beq $s7, 10, playerFail	#If the user has guessed 10 times, then end
 	j gloop			#Loop again until the user guesses correctly
 glend:	jal timer_elapsed	#Get elapsed time (in milliseconds)
 	div $s2, $v0, 1000	#Divide elapsed ms by 1000 and store it in $s2
