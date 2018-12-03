@@ -21,16 +21,16 @@ main:	jal srand		#Seed the random number generator
 	la $a0, intro_msg
 	la $a2, fail_msg
 	syscall
-mloop:	li $a0, 0		#Generate a number 0-99 for selecting a word
+mloop:	li $a0, 0		#Generate a number 0-2374 for selecting a word
 	li $a1, 2374		
 	jal rand
-	sll $v0, $v0, 2
+	#sll $v0, $v0, 2
 	la $t0, viableWords	#Get address of randomly selected word
 	mul $v0, $v0, 4
 	add $t0, $t0, $v0
 	li $s7, 0		#Reset guess count
-	lw $s2, ($t0)		#Gets the hidden string address and loads it into $s2
-	la $s3, ($t0)
+	lw $s2, ($t0)		#Gets the hidden string and loads it into $s2
+	la $s3, ($t0)		#Gets the hidden string address and loads it into $s3
 	jal timer_start		#Restart timer
 gloop:	li $v0, 4		#Print the guess prompt
 	la $a0, gprompt
