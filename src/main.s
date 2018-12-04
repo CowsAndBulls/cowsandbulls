@@ -46,22 +46,7 @@ valid:	add $s7, $s7, 1		#Increment guess count
 	move $a1, $s1
 	jal count_cbulls	
 	beq $v1, 4, glend	#If the bull count is 4, the user has guessed correctly, so end the loop
-	move $t1, $v0		#Store the number of cows
-	li $v0, 4		#Otherwise, print the number of cows
-	la $a0, cows_msg
-	syscall
-	li $v0, 1
-	move $a0, $t1		
-	syscall
-	li $v0, 4		#Print the number of bulls
-	la $a0, bulls_msg
-	syscall
-	li $v0, 1
-	move $a0, $v1
-	syscall
-	li $v0, 11		#Print a newline
-	li $a0, '\n'
-	syscall
+	jal display
 	beq $s7, 10, playerFail	#If the user has guessed 10 times, then end
 	j gloop			#Loop again until the user guesses correctly
 glend:	jal timer_elapsed	#Get elapsed time (in milliseconds)
