@@ -24,22 +24,17 @@ get_usrword:
 	li $t0, 0	#Initialize return value temporaries
 	li $t1, 0
 	lw $s1, buf	# Load the input input into a saved register for the cow and bulls fucntion
-	nop		#TODO: If the user inputs yes, then display time and go back to title screen
 	
 	la $t2, buf
 	lb $t4, ($t2)
 	bne $t4, 0x79, continueGame
-	#bne $t4, 0x59, continueGame
 	lb $t4, 1($t2)
 	bne $t4, 0x65, continueGame
-	#bne $t4, 0x45, continueGame
 	lb $t4, 2($t2)
 	bne $t4, 0x73, continueGame
-	#bne $t4, 0x59, continueGame
 	j giveUp
 	
 	continueGame:
-	nop		#TODO: Validate length & contents
 	la $a0, buf
 	jal isAlpha
 	bnez $v0, alphaTrue
@@ -49,7 +44,6 @@ alphaTrue:
 	la $a0, buf
 	jal toLowercase
 	
-	#move $a0, $v0
 	jal strLen
 	bnez $v0, lengthTrue
 	la $t0, err_length
