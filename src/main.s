@@ -109,8 +109,6 @@ playerFail:
 	sb $t0, 3($a0)
 	move $t0, $zero
 	sb $t0, 4($a0)
-	#sb $t0, 4($zero)
-	#la $a0, ($t0)
 	syscall
 	li $v0 11
 	li $a0, 0xa
